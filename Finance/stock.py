@@ -2,16 +2,18 @@
 
 import datetime
 import json
+import time
 
 import requests
 
-market = 0  # 上证：1 沪市：0 北证：0
-stock = "839790"
+market = 1  # 上证：1 沪市：0 北证：0
+stock = "515050"
 
 
 def is_time_between(start_time, end_time, check_time):
     return start_time <= check_time <= end_time
 
+#print(int(time.time()*1000))
 
 def get_stock_info(market_code=market, stock_code=stock):
     headers = {
@@ -29,9 +31,10 @@ def get_stock_info(market_code=market, stock_code=stock):
         "sec-ch-ua-mobile": "?0",
         "sec-ch-ua-platform": "\"macOS\""
     }
+
     cookies = {
         "qgqp_b_id": "c9e1f0de0c01db9abc2465f80d3794b2",
-        "websitepoptg_api_time": "1710297513944",
+        "websitepoptg_api_time": str(int(datetime.datetime.now().timestamp()*1000)),
         "st_si": "24299230542431",
         "st_asi": "delete",
         "st_pvi": "56325823352478",
@@ -87,9 +90,10 @@ current_time = datetime.datetime.now().time()
 if is_time_between(datetime.time(9, 0), datetime.time(15, 0), current_time):
     get_stock_info()
 elif is_time_between(datetime.time(15, 0), datetime.time(15, 30), current_time):
-    get_stock_info()
+    #get_stock_info()
     print("购买国债逆回购!!!!|color=red")
-elif is_time_between(datetime.time(15, 30), datetime.time(16, 00), current_time):
+elif is_time_between(datetime.time(15, 30), datetime.time(15, 40), current_time):
     get_stock_info()
 else:
+    #get_stock_info()
     print("")
