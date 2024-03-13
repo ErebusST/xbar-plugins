@@ -56,7 +56,7 @@ def get_stock_info(market_code=market, stock_code=stock):
     }
     response = requests.get(url, headers=headers, cookies=cookies, params=params)
     response_text = response.text
-    response_text = response_text.replace("cb_1710297555909_59224578(", "").replace(");", "")
+    response_text = response_text.replace("{}(".format(params.get("cb")), "").replace(");", "")
     #print(response_text)
     response_json = json.loads(response_text)
     data = response_json["data"]
@@ -71,7 +71,7 @@ def get_stock_info(market_code=market, stock_code=stock):
     move = ""
     color = 'white'
     if len(details) > 0:
-        time = details[0].split(" ")[1]
+        time_str = details[0].split(" ")[1]
         price = details[3]
         if float(price) < pre_price:
             color = 'green'
@@ -80,7 +80,7 @@ def get_stock_info(market_code=market, stock_code=stock):
             color = 'red'
             move = '▲'
 
-        price_text = "{}@{}".format(price, time)
+        price_text = "{}@{}".format(price, time_str)
 
     print("{}:{} {}| color={}".format(name, price_text, move, color))
 
